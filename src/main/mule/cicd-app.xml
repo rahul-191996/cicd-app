@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c019fbc8-b4ea-48b7-9ea4-a2e32450bf95" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="cicd-appFlow" doc:id="2b8a208f-dda3-454a-8ce3-0e0ebc08b521" >
+		<http:listener doc:name="Listener" doc:id="8258851c-dcbd-4d73-94a1-f72448dfff4a" config-ref="HTTP_Listener_config" path="/cicdapp"/>
+		<set-payload value='#["ci cd pipeline implementation"]' doc:name="Set Payload" doc:id="086a3267-a596-4e78-bf07-5437f76092c5" />
+		<ee:transform doc:name="Transform Message" doc:id="3b48f422-5657-4992-b1c3-e892aa4ab960" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+root: {
+	abc: payload
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="553b5593-51aa-4f4e-b0f7-cd8011974a7a" message="#[payload]"/>
+	</flow>
+</mule>
