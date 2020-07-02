@@ -37,7 +37,7 @@
 		<environment>Sandbox</environment>
        <applicationName>cicd-app-demo</applicationName>
 <workerType>MICRO</workerType>
-		<businessGroup>abcd</businessGroup>
+		<businessGroup>rahul</businessGroup>
 		
 </cloudHubDeployment>
 				</configuration>
